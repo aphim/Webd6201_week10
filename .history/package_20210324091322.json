@@ -2,7 +2,7 @@
   "name": "webd6201-w2021-ice9b",
   "version": "1.0.0",
   "description": "Demo Project for WEBD6201 - ICE 9",
-  "main": "index.js",
+  "main": "server.js",
   "author": "Jacky Yuan",
   "license": "MIT",
   "engines": {
@@ -10,7 +10,7 @@
     "npm": "^6.1.0"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
