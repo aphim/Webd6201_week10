@@ -4,7 +4,7 @@ let router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) 
 {
-  res.render('index', { title: 'Express', page:'home' });
+  res.render('index', { title: 'Express' });
 });
 
 /* GET home page - home route. */
@@ -41,12 +41,6 @@ router.get('/contact', function(req, res, next)
 router.get('/login', function(req, res, next) 
 {
   res.render('index', { title: 'Login', page:'login' });
-});
-
-/* GET register page - register route. */
-router.get('/register', function(req, res, next) 
-{
-  res.render('index', { title: 'Register', page:'register' });
 });
 
 module.exports = router;
