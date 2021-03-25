@@ -283,12 +283,6 @@ namespace core
       }
     }
 
-    function performLogout():void
-    {
-      sessionStorage.clear();
-      location.href = "/login";
-    }
-
 
     /**
      * This is the entry point for our program

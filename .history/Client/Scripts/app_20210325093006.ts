@@ -1,7 +1,7 @@
 
 namespace core
 {
-  let linkData: string;
+let LinkData: string;
 
     function testFullName(): void
     {
@@ -136,7 +136,8 @@ namespace core
         contactList.innerHTML = data;
 
         $("button.edit").on("click", function(){
-          location.href = '/edit/' + $(this).val().toString();
+          //loadLink("edit", $(this).val().toString());
+          location.href = '/edit?'+ $(this).val().toString();
         });
 
          $("button.delete").on("click", function(){
@@ -144,7 +145,7 @@ namespace core
            {
             localStorage.removeItem($(this).val().toString());
            }
-          
+           //loadLink("contact-list"); // refresh the page
            location.href = '/contact-list';
          });
 
@@ -152,13 +153,14 @@ namespace core
 
       $("#addButton").on("click", function() 
       {
+       //loadLink("edit");
        location.href = '/edit';
       });
     }
 
     function displayEdit(): void
     {
-      let key = $("body")[0].dataset.contactid;
+      let key = router.LinkData;
 
       let contact = new core.Contact();
 
@@ -204,7 +206,7 @@ namespace core
           }
 
           // return to the contact list
-          linkData = '';
+          //loadLink("contact-list");
           location.href = '/contact-list';
           
         });
@@ -212,11 +214,11 @@ namespace core
       $("#cancelButton").on("click", function()
       {
         // return to the contact list
+        //loadLink("contact-list");
         location.href = '/contact-list';
       });
     }
 
-//Login function
     function displayLogin():void
     {
       let messageArea = $("#messageArea");
@@ -253,6 +255,7 @@ namespace core
             messageArea.removeAttr("class").hide();
 
             // redirect user to secure area - contact-list.html
+            //loadLink("contact-list");
             location.href = '/contact-list';
           }
           else
@@ -269,26 +272,88 @@ namespace core
         // clear the login form
         document.forms[0].reset();
         // return to the home page
+        //loadLink("home");
         location.href = '/home';
       });
     }
 
-   
+    /* function toggleLogin(): void
+    {
+      let contactListLink = $("#contactListLink")[0]; // makes a reference to the contact-list link
+
+      // if user is logged in
+      if(sessionStorage.getItem("user"))
+      { //Logged in -----------------------
+
+        // swap out the login link for logout
+        $("#loginListItem").html(
+        `<a id="logout" class="nav-link" aria-current="page"><i class="fas fa-sign-out-alt"></i> Logout</a>`
+        );
+
+        if(!contactListLink) // checks if contact-list link is not already present
+        {
+          // add contact-list link
+          $(`<li id="contactListLink" class="nav-item">
+          <a id="contact-list" class="nav-link" aria-current="page"><i class="fas fa-users fa-lg"></i> Contact List</a>
+        </li>`).insertBefore("#loginListItem");
+        }
+      }
+      else
+      { // Logged out-----------------------
+
+        // swap out the login link for logout
+        $("#loginListItem").html(
+          `<a id="login" class="nav-link" aria-current="page"><i class="fas fa-sign-in-alt"></i> Login</a>`
+          );
+          
+        if(contactListLink) // checks if contact-list link is present
+        {
+          // remove contact-list link
+          $("#contactListLink").remove();
+        }
+
+      }
+
+      addLinkEvents();
+      highlightActiveLink(router.ActiveLink);
+    } */
+
     function authGuard():void
     {
       if(!sessionStorage.getItem("user"))
       {
       // redirect back to login page
+      //loadLink("login");
       location.href = '/login';
       }
     }
 
-    function performLogout():void
-    {
-      sessionStorage.clear();
-      location.href = "/login";
-    }
 
+    /**
+     * This function associates and returns a related callback to a route
+     *
+     * @param {string} activeLink
+     * @returns {Function}
+     */
+    /* function ActiveLinkCallBack(activeLink:string): Function
+    {
+      switch (activeLink) 
+      {
+        case "home": return displayHome;
+        case "about": return displayAbout;
+        case "projects": return displayProjects;
+        case "services": return displayServices;
+        case "contact": return displayContact;
+        case "contact-list": return displayContactList;
+        case "edit": return displayEdit;
+        case "login": return displayLogin;
+        case "register": return displayRegister;
+        case "404": return display404;
+        default:
+          console.error("ERROR: callback does not exist: " + activeLink);
+          break;
+      }
+    } */
 
     /**
      * This is the entry point for our program
@@ -296,6 +361,11 @@ namespace core
      */
     function Start(): void
     {
+/*      loadHeader(router.ActiveLink);
+      
+        loadContent(router.ActiveLink, ActiveLinkCallBack(router.ActiveLink));
+
+        loadFooter(); */
       
         let pageID = $("body")[0].getAttribute("id");
 
@@ -313,9 +383,7 @@ namespace core
           case 'login':
             displayLogin();
             break; 
-          case 'logout':
-            performLogout();
-            break;
+
         }
 
     }

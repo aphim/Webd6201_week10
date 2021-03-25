@@ -49,12 +49,6 @@ router.get('/register', function(req, res, next)
   res.render('index', { title: 'Register', page:'register', user:'' });
 });
 
-/* GET logout page - logout route. */
-router.get('/logout', function(req, res, next) 
-{
-  res.render('index', { title: 'Logout', page:'logout', user:'' });
-});
-
 /***************************************************************/
 
 /* GET contact-list page - contact-list route. */

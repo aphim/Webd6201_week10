@@ -136,7 +136,8 @@ namespace core
         contactList.innerHTML = data;
 
         $("button.edit").on("click", function(){
-          location.href = '/edit/' + $(this).val().toString();
+          linkData = $(this).val().toString();
+          location.href = '/edit?';
         });
 
          $("button.delete").on("click", function(){
@@ -158,7 +159,7 @@ namespace core
 
     function displayEdit(): void
     {
-      let key = $("body")[0].dataset.contactid;
+      let key = linkData;
 
       let contact = new core.Contact();
 
@@ -216,7 +217,6 @@ namespace core
       });
     }
 
-//Login function
     function displayLogin():void
     {
       let messageArea = $("#messageArea");
@@ -283,12 +283,6 @@ namespace core
       }
     }
 
-    function performLogout():void
-    {
-      sessionStorage.clear();
-      location.href = "/login";
-    }
-
 
     /**
      * This is the entry point for our program
@@ -296,6 +290,11 @@ namespace core
      */
     function Start(): void
     {
+/*      loadHeader(router.ActiveLink);
+      
+        loadContent(router.ActiveLink, ActiveLinkCallBack(router.ActiveLink));
+
+        loadFooter(); */
       
         let pageID = $("body")[0].getAttribute("id");
 
@@ -313,9 +312,7 @@ namespace core
           case 'login':
             displayLogin();
             break; 
-          case 'logout':
-            performLogout();
-            break;
+
         }
 
     }
